@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebastian Vidaurre — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #181818;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --white: #F0EDE6;
+    --muted: #888880;
+    --border: #222220;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(201,168,76,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp .6s ease .2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 300;
+    line-height: .95;
+    letter-spacing: -.02em;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp .8s ease .4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp .8s ease .6s forwards;
+  }
+
+  .hero-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp .8s ease .8s forwards;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    color: var(--muted);
+  }
+
+  .tag.gold {
+    border-color: rgba(201,168,76,.4);
+    color: var(--gold);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    opacity: 0;
+    animation: fadeUp .8s ease 1s forwards;
+  }
+
+  /* SECTION */
+  .section-header {
+    padding: 5rem 4rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+
+  /* CASE STUDIES */
+  .cases {
+    padding: 0;
+  }
+
+  .case {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .case.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .case:hover .case-right {
+    background: #111110;
+  }
+
+  .case-left {
+    padding: 3.5rem 3rem;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+  }
+
+  .case-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .1em;
+  }
+
+  .case-client {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.01em;
+  }
+
+  .case-sector {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .case-right {
+    padding: 3.5rem 3.5rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 2rem;
+    transition: background .2s ease;
+  }
+
+  .case-challenge {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+
+  .case-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  .case-body {
+    font-size: 14px;
+    color: #AAA9A3;
+    line-height: 1.75;
+  }
+
+  .case-results {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .result {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .result-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .result-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .award-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border: 1px solid rgba(201,168,76,.35);
+    color: var(--gold);
+    border-radius: 2px;
+    margin-top: 4px;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 6rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-left .section-label { margin-bottom: 1.5rem; }
+
+  .about-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .about-title em { font-style: italic; color: var(--gold-light); }
+
+  .about-body {
+    font-size: 14px;
+    color: #AAA9A3;
+    line-height: 1.8;
+  }
+
+  .about-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-top: .5rem;
+  }
+
+  .credential {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .credential:first-child { border-top: 1px solid var(--border); }
+
+  .credential-org {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .credential-role {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: .05em;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+  }
+
+  .footer-contact {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: .1em;
+    line-height: 2;
+  }
+
+  .footer-contact a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 2rem; }
+    .case { grid-template-columns: 1fr; }
+    .case-left { border-right: none; border-bottom: 1px solid var(--border); min-height: auto; }
+    .about { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 2rem; }
+    .section-header { padding: 3rem 2rem 2rem; }
+    .case-right { padding: 2rem; }
+    .case-left { padding: 2rem; }
+    .footer { padding: 2rem; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Strategy &amp; Behavioural Science — Selected Work</div>
+  <h1 class="hero-name">Sebastian<br><em>Vidaurre</em></h1>
+  <p class="hero-desc">Behavioural strategist and innovation consultant with 5+ years delivering evidence-based solutions across financial services, FMCG, healthcare, and technology in Latin America. Currently completing an MSc Behavioural Science at the London School of Economics.</p>
+  <div class="hero-tags">
+    <span class="tag gold">4× Effie Award Winner</span>
+    <span class="tag">Behavioural Intervention Design</span>
+    <span class="tag">Consumer Insight</span>
+    <span class="tag">Innovation Strategy</span>
+    <span class="tag">Mixed Methods Research</span>
+    <span class="tag">LSE MSc Behavioural Science</span>
+  </div>
+  <div class="hero-scroll">Scroll to explore ↓</div>
+</section>
+
+<!-- CASE STUDIES -->
+<div class="section-header">
+  <div class="section-label">01 — Selected Projects</div>
+  <h2 class="section-title">Work that<br><em style="font-style:italic;color:var(--gold-light)">moved people</em></h2>
+</div>
+
+<div class="cases">
+
+  <!-- ENTEL -->
+  <article class="case" data-observe>
+    <div class="case-left">
+      <span class="case-number">01</span>
+      <div>
+        <div class="case-client">Entel</div>
+        <div class="case-sector">Telecoms · Peru</div>
+      </div>
+      <div>
+        <div class="award-badge">🥇 Gold Effie — Telecoms</div>
+        <div class="award-badge" style="margin-top:6px">🥉 Bronze Effie — Product</div>
+      </div>
+    </div>
+    <div class="case-right">
+      <div class="case-challenge">Challenge</div>
+      <div>
+        <p class="case-headline">"How do you launch a product no one in the category had ever talked about?"</p>
+        <p class="case-body" style="margin-top:1rem">Entel needed to introduce additional phone lines and drive group migration to postpaid — a product the entire telecom category had ignored. The conventional approach was a promotional SMS that looked like spam. We needed something that felt human.<br><br>
+        Drawing on social identity theory and the psychology of collaborative consumption, we reframed additional lines not as a product feature but as an act of sharing. The insight: Peruvians are among the most savings-oriented people in the region, and sharing to save is deeply culturally resonant. The campaign "Cuando compartimos, ahorramos" (When we share, we save) positioned Entel alongside Netflix and Spotify as a brand built on the logic of sharing — not selling.</p>
+      </div>
+      <div class="case-results">
+        <div class="result">
+          <span class="result-value">2</span>
+          <span class="result-label">Effie Awards</span>
+        </div>
+        <div class="result">
+          <span class="result-value">1st</span>
+          <span class="result-label">Category to launch this way</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- RIMAC -->
+  <article class="case" data-observe>
+    <div class="case-left">
+      <span class="case-number">02</span>
+      <div>
+        <div class="case-client">RIMAC</div>
+        <div class="case-sector">Insurance · Peru</div>
+      </div>
+      <div class="case-sector" style="color:var(--muted)">Source: Ipsos</div>
+    </div>
+    <div class="case-right">
+      <div class="case-challenge">Challenge</div>
+      <div>
+        <p class="case-headline">"Reaching 3.7 million prospective customers who had considered insurance — but never bought it."</p>
+        <p class="case-body" style="margin-top:1rem">RIMAC's new strategic positioning required attracting a segment fundamentally disengaged from the insurance category. Research showed 83% had considered buying insurance, yet 70% couldn't find one that fit their needs, 69% found them too expensive, and 40% didn't know who to contact.<br><br>
+        We built a three-track research and innovation programme: an audience deep dive (500+ surveys and 20 in-depth interviews to construct new archetypes), a comms workshop across journey, product, and communications tracks, and a freemium pilot testing new voice, tone, and product formats directly with target consumers. The result was a more empathetic product design process grounded in real behavioural barriers — validated by Top 2 Box scores from Ipsos brand testing.</p>
+      </div>
+      <div class="case-results">
+        <div class="result">
+          <span class="result-value">500+</span>
+          <span class="result-label">Customer surveys analysed</span>
+        </div>
+        <div class="result">
+          <span class="result-value">20</span>
+          <span class="result-label">In-depth interviews</span>
+        </div>
+        <div class="result">
+          <span class="result-value">3</span>
+          <span class="result-label">Innovation tracks</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- INKA CHIPS -->
+  <article class="case" data-observe>
+    <div class="case-left">
+      <span class="case-number">03</span>
+      <div>
+        <div class="case-client">Inka Chips</div>
+        <div class="case-sector">FMCG · Peru</div>
+      </div>
+    </div>
+    <div class="case-right">
+      <div class="case-challenge">Challenge</div>
+      <div>
+        <p class="case-headline">"Building a brand pyramid and digital strategy from the ground up for an iconic Peruvian snack brand."</p>
+        <p class="case-body" style="margin-top:1rem">Inka Chips needed to formalise its brand identity and translate it into a coherent digital presence that resonated with its core audiences. Starting with a desk research phase synthesising both quantitative and qualitative studies the brand had conducted, alongside market trend analysis, we identified a brand territory rooted in cultural pride and taste heritage.<br><br>
+        The territory "Demanding taste by heritage" gave the brand a platform that felt authentic and differentiated. From this foundation, we developed four brand battles — competitive positioning frameworks — and built a digital strategy that mapped the brand's communication style, tone, and content approach to the specific passion points of its target audiences. The result was a brand architecture the marketing team could execute consistently across all channels.</p>
+      </div>
+      <div class="case-results">
+        <div class="result">
+          <span class="result-value">4</span>
+          <span class="result-label">Brand battle frameworks</span>
+        </div>
+        <div class="result">
+          <span class="result-value">1</span>
+          <span class="result-label">Brand pyramid + full digital strategy</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- CASINO CULTURE LAB -->
+  <article class="case" data-observe>
+    <div class="case-left">
+      <span class="case-number">04</span>
+      <div>
+        <div class="case-client">Culture Lab</div>
+        <div class="case-sector">FMCG Innovation · Alicorp</div>
+      </div>
+      <div>
+        <div class="case-sector" style="color:var(--muted);margin-top:.5rem">Clients: Casino, BCP, Falabella</div>
+      </div>
+    </div>
+    <div class="case-right">
+      <div class="case-challenge">Challenge</div>
+      <div>
+        <p class="case-headline">"Building an innovation unit from scratch — and turning ephemeral trends into lasting cultural moments."</p>
+        <p class="case-body" style="margin-top:1rem">Casino, Alicorp's biscuit brand, needed to move beyond campaign thinking and connect with new audience tribes it had never reached. I founded and led Culture Lab, the agency's first internal innovation unit, designing a proprietary methodology combining design thinking and Agile governance that could be adapted across different clients and objectives.<br><br>
+        For Casino specifically, this meant three interconnected workstreams: a governance and process architecture giving the brand a system to respond to trends in real time; a route-to-market innovation programme including tribe immersions and pilot quantification; and a cultural moments strategy turning small trends into scalable activations. Executions included Más Gamers Festival co-immersion, a Wonka x Casino Lab LVL Party, and Barbieheimer — all translating audience subcultures into commercially relevant brand moments. Culture Lab became one of the agency's most important projects, subsequently used with BCP and Falabella.</p>
+      </div>
+      <div class="case-results">
+        <div class="result">
+          <span class="result-value">3</span>
+          <span class="result-label">Major brand clients</span>
+        </div>
+        <div class="result">
+          <span class="result-value">1st</span>
+          <span class="result-label">Innovation unit at agency</span>
+        </div>
+        <div class="result">
+          <span class="result-value">4×</span>
+          <span class="result-label">Effie Award wins</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- TREBLE.AI -->
+  <article class="case" data-observe>
+    <div class="case-left">
+      <span class="case-number">05</span>
+      <div>
+        <div class="case-client">Treble.ai</div>
+        <div class="case-sector">SaaS · B2B · Colombia</div>
+      </div>
+    </div>
+    <div class="case-right">
+      <div class="case-challenge">Challenge</div>
+      <div>
+        <p class="case-headline">"A strong product with no clear positioning — and a LatAm market full of competitors."</p>
+        <p class="case-body" style="margin-top:1rem">Treble.ai had built a compelling B2B conversational AI platform but lacked the strategic clarity to differentiate it in a crowded regional market. They needed to articulate who they were, who they were for, and why it mattered — before they could sell it effectively.<br><br>
+        I designed and delivered a three-day brand strategy workshop in Bogotá with Treble's senior leadership team. The process combined buyer persona development, pain-point mapping, and competitive positioning to identify the key insight driving the brand: that understanding the emotional and functional needs of the buyer persona — not just the product specs — was the key to conversion. The workshop output was a complete brand pyramid, consolidated positioning, and a go-to-market strategy with differentiated messaging for each principal customer segment.</p>
+      </div>
+      <div class="case-results">
+        <div class="result">
+          <span class="result-value">3</span>
+          <span class="result-label">Day workshop in Bogotá</span>
+        </div>
+        <div class="result">
+          <span class="result-value">1</span>
+          <span class="result-label">Full brand pyramid delivered</span>
+        </div>
+        <div class="result">
+          <span class="result-value">GTM</span>
+          <span class="result-label">Strategy per segment</span>
+        </div>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-left">
+    <div class="section-label">02 — About</div>
+    <h2 class="about-title">Strategy built on<br><em>understanding people</em></h2>
+    <p class="about-body" style="margin-bottom:1.5rem">I grew up in Peru, where complexity is not abstract — electoral instability, economic precarity, and institutional distrust are the context in which people make daily decisions. That background shaped how I approach strategy: curiosity first, frameworks second.</p>
+    <p class="about-body" style="margin-bottom:1.5rem">After five years leading innovation and strategy within the WPP network across Latin America, I moved to London to formalise that instinct with rigorous academic training. At LSE I work as a Research Assistant in the Behavioural Lab, running eye-tracking experiments on sustainable consumer behaviour, and I'm completing a dissertation on electoral uncertainty as a driver of present bias in financial decision-making in Peru.</p>
+    <p class="about-body">I work across English and Spanish, and across disciplines — from data analysts and UX designers to economists and creative directors. The common thread is always the same: understanding why people do what they do, and designing solutions that work with that understanding rather than against it.</p>
+  </div>
+  <div class="about-right">
+    <div class="credential">
+      <div class="credential-org">London School of Economics</div>
+      <div class="credential-role">MSc Behavioural Science (2024–2026) · Research Assistant, Behavioural Lab</div>
+    </div>
+    <div class="credential">
+      <div class="credential-org">VML (WPP)</div>
+      <div class="credential-role">Innovation Lead · 2024–2025</div>
+    </div>
+    <div class="credential">
+      <div class="credential-org">Circus Grey (WPP)</div>
+      <div class="credential-role">Senior Strategic Planner · 2021–2024</div>
+    </div>
+    <div class="credential">
+      <div class="credential-org">Universidad de Lima</div>
+      <div class="credential-role">BSc Marketing — Consumer Behaviour & Market Research</div>
+    </div>
+    <div class="credential">
+      <div class="credential-org">ESC Clermont Business School</div>
+      <div class="credential-role">BSc International Business (Double Degree)</div>
+    </div>
+    <div class="credential">
+      <div class="credential-org">4× Effie Award Winner</div>
+      <div class="credential-role">1 Gold, 1 Silver, 2 Bronze — Financial Services & FMCG</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-name">Sebastian Vidaurre</div>
+  <div class="footer-contact">
+    <div><a href="mailto:sebasvd94@gmail.com">sebasvd94@gmail.com</a></div>
+    <div><a href="https://linkedin.com/in/sebastianvidaurre-dlr" target="_blank">linkedin.com/in/sebastianvidaurre-dlr</a></div>
+    <div>London, UK · +44 7565 172713</div>
+    <div style="margin-top:.5rem;color:#555">© 2026 Sebastian Vidaurre</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('[data-observe]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
